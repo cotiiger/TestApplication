@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/centerImage"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:background="@drawable/home_alone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/sizingArea"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/centerImage"
+        app:layout_constraintTop_toTopOf="@+id/centerImage" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<androidx.constraintlayout.motion.widget.MotionLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/motionLayout"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:layoutDescription="@xml/fragment_main_scene">-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/Header"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:background="#AAAAAA"-->
+<!--        app:layout_constraintBottom_toTopOf="parent"/>-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/Footer"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:background="#AAAAAA"-->
+<!--        app:layout_constraintTop_toBottomOf="parent"/>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/transitionButton"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+
+
+<!--</androidx.constraintlayout.motion.widget.MotionLayout>-->
