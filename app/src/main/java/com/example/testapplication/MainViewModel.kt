@@ -46,9 +46,6 @@ class MainViewModel : ViewModel() {
             circleWidth = it.circleX_Max - it.circleX_Min,
             circleHeight = it.circleY_Max - it.circleY_Min
         ) }
-        Log.d("debugLog:1", "x+:${_uiState.value.circleX_Max} x-:${_uiState.value.circleX_Min}")
-        Log.d("debugLog:2", "y+:${_uiState.value.circleY_Max} y-:${_uiState.value.circleY_Min}")
-        Log.d("debugLog:3", "width:${_uiState.value.circleWidth} height:${_uiState.value.circleHeight}")
     }
 
     override fun onCleared() {

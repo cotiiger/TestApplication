@@ -3,27 +3,48 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
     android:id="@+id/parentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- 切り抜きしたい画像 -->
     <ImageView
         android:id="@+id/centerImage"
         android:layout_width="350dp"
         android:layout_height="500dp"
-        android:background="@drawable/home_alone"
+        android:src="@drawable/home_alone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- お絵描きできるView 兼 タップを計測するView -->
+    <com.example.testapplication.DrawableView
+        android:id="@+id/drawableView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@+id/centerImage"
+        app:layout_constraintEnd_toEndOf="@+id/centerImage"
+        app:layout_constraintTop_toTopOf="@+id/centerImage"
+        app:layout_constraintBottom_toBottomOf="@+id/centerImage" />
+
+    <!--検出範囲(囲った範囲が納まる最小の四角)-->
     <ImageView
         android:id="@+id/sizingArea"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#AA000000"
         app:layout_constraintStart_toStartOf="@+id/centerImage"
         app:layout_constraintTop_toTopOf="@+id/centerImage" />
+
+    <ImageView
+        android:id="@+id/clippedArea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
