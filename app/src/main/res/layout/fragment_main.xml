@@ -33,9 +33,18 @@
         android:id="@+id/sizingArea"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#AA000000"
+        android:background="#77000000"
         app:layout_constraintStart_toStartOf="@+id/centerImage"
         app:layout_constraintTop_toTopOf="@+id/centerImage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="↓切り抜かれた画像↓"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/clippedArea" />
 
     <ImageView
         android:id="@+id/clippedArea"

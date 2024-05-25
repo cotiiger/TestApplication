@@ -39,11 +39,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 viewModel.uiState.collect {
                     // sizingAreaを囲った丸が納まるサイズにする
                     if(it.circleWidth > 0 && it.circleHeight > 0) {
-                        // 中心画像の切り抜き
+                        // 中心画像の画像データを取得
                         val centerImageSrcBitmap = mainImage.drawable.toBitmap() // srcから取りたい時はこちら
                         // val centerImageSrcBitmap = centerImage.background.toBitmap() // backgroundから取りたい時はこちら
 
-                        // 元画像を表示していたViewの大きさになおす
+                        // 画像データを表示していたViewの大きさに変更する
                         val resizedBitmap = Bitmap.createScaledBitmap(
                             centerImageSrcBitmap,
                             mainImage.measuredWidth,
@@ -53,8 +53,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                         // 囲った範囲に切り抜く
                         val clippedBitmap = viewModel.clipImage(resizedBitmap)
-
-//                        sizingArea.isVisible = true
 
                         // 掲出範囲のViewをリサイズ
                         resizeView(sizingArea, it.circleWidth.toInt(), it.circleHeight.toInt())
