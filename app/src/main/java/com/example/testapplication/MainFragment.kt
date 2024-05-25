@@ -1,26 +1,18 @@
 package com.example.testapplication
 
-import android.R.attr.path
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
-import android.graphics.Path
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
-import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.testapplication.databinding.FragmentMainBinding
 import kotlinx.coroutines.launch
-import kotlin.io.path.Path
 
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -32,14 +24,14 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
 
         // val binding: FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
-        val centerImage = view.findViewById<ImageView>(R.id.centerImage) // 切り抜きたい画像
+        val mainImage = view.findViewById<ImageView>(R.id.centerImage) // 切り抜きたい画像
         val sizingArea = view.findViewById<ImageView>(R.id.sizingArea) // 囲った後に上に表示される範囲
         val clippedArea = view.findViewById<ImageView>(R.id.clippedArea) // 囲った範囲に切り抜いた画像
         val drawableView = view.findViewById<DrawableView>(R.id.drawableView) // 指の軌跡の表示と計測をするView
 
         // 各種設定
         drawableView.viewModel = viewModel
-        sizingArea.isVisible = false
+//        sizingArea.isVisible = false
 
         // repeatOnLifecycle
         viewLifecycleOwner.lifecycleScope.launch {
@@ -48,29 +40,29 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     // sizingAreaを囲った丸が納まるサイズにする
                     if(it.circleWidth > 0 && it.circleHeight > 0) {
                         // 中心画像の切り抜き
-                        val centerImageSrcBitmap = centerImage.drawable.toBitmap() // srcから取りたい時はこちら
+                        val centerImageSrcBitmap = mainImage.drawable.toBitmap() // srcから取りたい時はこちら
                         // val centerImageSrcBitmap = centerImage.background.toBitmap() // backgroundから取りたい時はこちら
 
                         // 元画像を表示していたViewの大きさになおす
                         val resizedBitmap = Bitmap.createScaledBitmap(
                             centerImageSrcBitmap,
-                            centerImage.measuredWidth,
-                            centerImage.measuredHeight,
+                            mainImage.measuredWidth,
+                            mainImage.measuredHeight,
                             true
                         )
 
                         // 囲った範囲に切り抜く
                         val clippedBitmap = viewModel.clipImage(resizedBitmap)
 
-                        sizingArea.isVisible = true
+//                        sizingArea.isVisible = true
 
                         // 掲出範囲のViewをリサイズ
                         resizeView(sizingArea, it.circleWidth.toInt(), it.circleHeight.toInt())
                         resizeView(clippedArea, it.circleWidth.toInt(), it.circleHeight.toInt())
 
                         // 囲った場所の上に乗せる
-                        sizingArea.x = it.circleX_Min
-                        sizingArea.y = it.circleY_Min
+                        sizingArea.x = it.circleX_Min + mainImage.x
+                        sizingArea.y = it.circleY_Min + mainImage.y
 
                         // 切り抜かれた画像をセット
                         clippedArea.setImageBitmap(clippedBitmap)

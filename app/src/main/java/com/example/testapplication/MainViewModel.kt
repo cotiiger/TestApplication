@@ -32,10 +32,11 @@ class MainViewModel : ViewModel() {
 
     fun recordTouchEvent(x: Float, y: Float) {
         _uiState.value.let {
-            if (x > 0 && x < it.circleX_Min) { _uiState.update { it.copy(circleX_Min = x) } }
-            if (x > 0 && x > it.circleX_Max) { _uiState.update { it.copy(circleX_Max = x) } }
-            if (y > 0 && y < it.circleY_Min) { _uiState.update { it.copy(circleY_Min = y) } }
-            if (y > 0 && y > it.circleY_Max) { _uiState.update { it.copy(circleY_Max = y) } }
+            if(x < 0 || y < 0) return
+            if (x < it.circleX_Min) { _uiState.update { it.copy(circleX_Min = x) } }
+            if (x > it.circleX_Max) { _uiState.update { it.copy(circleX_Max = x) } }
+            if (y < it.circleY_Min) { _uiState.update { it.copy(circleY_Min = y) } }
+            if (y > it.circleY_Max) { _uiState.update { it.copy(circleY_Max = y) } }
         }
     }
 

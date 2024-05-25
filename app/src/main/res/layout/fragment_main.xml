@@ -11,8 +11,8 @@
     <!-- 切り抜きしたい画像 -->
     <ImageView
         android:id="@+id/centerImage"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/home_alone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
