@@ -32,10 +32,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
 
         // val binding: FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
-        val centerImage = view.findViewById<ImageView>(R.id.centerImage)
-        val sizingArea = view.findViewById<ImageView>(R.id.sizingArea)
-        val clippedArea = view.findViewById<ImageView>(R.id.clippedArea)
-        val drawableView = view.findViewById<DrawableView>(R.id.drawableView)
+        val centerImage = view.findViewById<ImageView>(R.id.centerImage) // 切り抜きたい画像
+        val sizingArea = view.findViewById<ImageView>(R.id.sizingArea) // 囲った後に上に表示される範囲
+        val clippedArea = view.findViewById<ImageView>(R.id.clippedArea) // 囲った範囲に切り抜いた画像
+        val drawableView = view.findViewById<DrawableView>(R.id.drawableView) // 指の軌跡の表示と計測をするView
 
         // 各種設定
         drawableView.viewModel = viewModel
@@ -60,13 +60,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         )
 
                         // 囲った範囲に切り抜く
-                        val clippedBitmap = Bitmap.createBitmap(
-                            resizedBitmap,
-                            it.circleX_Min.toInt(),
-                            it.circleY_Min.toInt(),
-                            (it.circleWidth).toInt(),
-                            (it.circleHeight).toInt()
-                        )
+                        val clippedBitmap = viewModel.clipImage(resizedBitmap)
 
                         sizingArea.isVisible = true
 
@@ -80,11 +74,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                         // 切り抜かれた画像をセット
                         clippedArea.setImageBitmap(clippedBitmap)
-
-                        // 残りのタスク
-                        // 指が画像の外にでた場合にクラッシュする不具合の修正
-                        // 努力目標：なぞる始点と終点の近さに制限を設ける
-                        // 努力目標：制限から外れたら軌跡を消すようにする
                     }
                 }
             }

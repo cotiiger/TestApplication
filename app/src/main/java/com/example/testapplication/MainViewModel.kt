@@ -1,10 +1,14 @@
 package com.example.testapplication
 
+import android.graphics.Bitmap
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class MainViewModel : ViewModel() {
 
@@ -14,8 +18,8 @@ class MainViewModel : ViewModel() {
     fun recordFirstTouchEvent(x: Float, y: Float) {
         _uiState.update {
             it.copy(
-                previousX = x,
-                previousY = y,
+                firstTouchX = x,
+                firstTouchY = y,
                 circleX_Min = x,
                 circleX_Max = x,
                 circleY_Min = y,
@@ -28,16 +32,20 @@ class MainViewModel : ViewModel() {
 
     fun recordTouchEvent(x: Float, y: Float) {
         _uiState.value.let {
-            _uiState.update {
-                it.copy(
-                    previousX = x,
-                    previousY = y
-                )
-            }
             if (x > 0 && x < it.circleX_Min) { _uiState.update { it.copy(circleX_Min = x) } }
             if (x > 0 && x > it.circleX_Max) { _uiState.update { it.copy(circleX_Max = x) } }
             if (y > 0 && y < it.circleY_Min) { _uiState.update { it.copy(circleY_Min = y) } }
             if (y > 0 && y > it.circleY_Max) { _uiState.update { it.copy(circleY_Max = y) } }
+        }
+    }
+
+    fun actionUp(x: Float, y: Float) {
+        val distance = calculateDistance(x, y, _uiState.value.firstTouchX.toDouble(), _uiState.value.firstTouchY.toDouble())
+        Log.d("debugLog", "${_uiState.value.firstTouchX} : ${_uiState.value.firstTouchY}")
+        Log.d("debugLog", "$x : $y")
+        Log.d("debugLog", "distance : $distance")
+        if(distance < 50) {
+            calculateCircleSize()
         }
     }
 
@@ -48,6 +56,20 @@ class MainViewModel : ViewModel() {
         ) }
     }
 
+    fun calculateDistance(x1: Float, y1: Float, x2: Double, y2: Double): Double {
+        return sqrt( (x1 - x2).pow(2.0) + (y1 - y2).pow(2.0))
+    }
+
+    fun clipImage(bitmap: Bitmap) : Bitmap {
+        return Bitmap.createBitmap(
+            bitmap,
+            _uiState.value.circleX_Min.toInt(),
+            _uiState.value.circleY_Min.toInt(),
+            _uiState.value.circleWidth.toInt(),
+            _uiState.value.circleHeight.toInt()
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         // ViewModelが破棄されるときにリソースをクリーンアップします
@@ -56,8 +78,8 @@ class MainViewModel : ViewModel() {
 
 data class MainUiState (
 //    val touchUiState: TouchUiState
-    val previousX: Float = 0f,
-    val previousY: Float = 0f,
+    val firstTouchX: Float = 0f,
+    val firstTouchY: Float = 0f,
     val circleX_Min: Float,
     val circleX_Max: Float,
     val circleY_Min: Float,

@@ -11,12 +11,15 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import androidx.core.content.ContextCompat
 
-
+/**
+ * 指でタップした軌跡を描画するViewです。
+ */
 class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var path = Path()
     private val paint = Paint().apply {
-        color = android.graphics.Color.WHITE
+        color = ContextCompat.getColor(context, R.color.trajectory_color)
         style = Paint.Style.STROKE
         strokeWidth = 30f
         isAntiAlias = true
@@ -38,24 +41,21 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 viewModel.recordFirstTouchEvent(event.x, event.y)
-                Log.d("debugLog", event.x.toString())
-                Log.d("debugLog", event.y.toString())
                 // タッチした位置にパスを移動
                 path.moveTo(x, y)
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
                 viewModel.recordTouchEvent(event.x, event.y)
-                Log.d("debugLog", event.x.toString())
-                Log.d("debugLog", event.y.toString())
-
                 // タッチしている位置までパスを線でつなぐ
                 path.lineTo(x, y)
                 invalidate() // 再描画を要求
             }
             MotionEvent.ACTION_UP -> {
-                viewModel.calculateCircleSize()
-                // タッチが終了したときの処理（描画に関してはここでは何もしない）
+                viewModel.actionUp(event.x, event.y)
+                // タッチ終了
+                path.reset()
+                invalidate() // 再描画を要求して画面をクリア
             }
         }
         return true
