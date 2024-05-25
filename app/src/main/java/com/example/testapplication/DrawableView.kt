@@ -1,5 +1,6 @@
 package com.example.testapplication
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -17,7 +18,10 @@ import androidx.core.content.ContextCompat
  * 指でタップした軌跡を描画するViewです。
  */
 class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-    private var path = Path()
+
+    lateinit var viewModel: MainViewModel
+
+    private val path = Path()
     private val paint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.trajectory_color)
         style = Paint.Style.STROKE
@@ -25,12 +29,19 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
         isAntiAlias = true
     }
 
-    lateinit var viewModel: MainViewModel
+    private var circleX = 0f
+    private var circleY = 0f
+    private var circleRadius = 0f
+    private var shouldDrawCircle = false
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         // 線を描画する
         canvas.drawPath(path, paint)
+
+        if(shouldDrawCircle) {
+            canvas.drawCircle(circleX, circleY, circleRadius, paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -43,6 +54,11 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
                 viewModel.recordFirstTouchEvent(event.x, event.y)
                 // タッチした位置にパスを移動
                 path.moveTo(x, y)
+
+                circleX = x
+                circleY = y
+                shouldDrawCircle = true
+                startRadiusAnimation()
             }
             MotionEvent.ACTION_MOVE -> {
                 val shouldXPointInView = event.x > 0 && event.x < this.width
@@ -59,8 +75,21 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
                 // タッチ終了
                 path.reset()
                 invalidate() // 再描画を要求して画面をクリア
+
+                shouldDrawCircle = false
             }
         }
         return true
+    }
+
+    private fun startRadiusAnimation() {
+        // ValueAnimatorを使用して半径をアニメーション
+        val animator = ValueAnimator.ofFloat(0f, 50f) // 半径を0から300にアニメーション
+        animator.duration = 300 // アニメーションの持続時間（ミリ秒）
+        animator.addUpdateListener { animation ->
+            circleRadius = animation.animatedValue as Float
+            invalidate() // 再描画を要求してアニメーションを反映
+        }
+        animator.start()
     }
 }

@@ -48,35 +48,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--<androidx.constraintlayout.motion.widget.MotionLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:id="@+id/motionLayout"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    app:layoutDescription="@xml/fragment_main_scene">-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/Header"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:background="#AAAAAA"-->
-<!--        app:layout_constraintBottom_toTopOf="parent"/>-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/Footer"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:background="#AAAAAA"-->
-<!--        app:layout_constraintTop_toBottomOf="parent"/>-->
-
-<!--    <Button-->
-<!--        android:id="@+id/transitionButton"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
-
-
-<!--</androidx.constraintlayout.motion.widget.MotionLayout>-->
