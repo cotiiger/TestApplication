@@ -31,7 +31,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         // 各種設定
         drawableView.viewModel = viewModel
-//        sizingArea.isVisible = false
 
         // repeatOnLifecycle
         viewLifecycleOwner.lifecycleScope.launch {

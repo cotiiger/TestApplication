@@ -42,22 +42,19 @@ class MainViewModel : ViewModel() {
 
     fun actionUp(x: Float, y: Float) {
         val distance = calculateDistance(x, y, _uiState.value.firstTouchX.toDouble(), _uiState.value.firstTouchY.toDouble())
-        Log.d("debugLog", "${_uiState.value.firstTouchX} : ${_uiState.value.firstTouchY}")
-        Log.d("debugLog", "$x : $y")
-        Log.d("debugLog", "distance : $distance")
         if(distance < 50) {
             calculateCircleSize()
         }
     }
 
-    fun calculateCircleSize() {
+    private fun calculateCircleSize() {
         _uiState.update { it.copy(
             circleWidth = it.circleX_Max - it.circleX_Min,
             circleHeight = it.circleY_Max - it.circleY_Min
         ) }
     }
 
-    fun calculateDistance(x1: Float, y1: Float, x2: Double, y2: Double): Double {
+    private fun calculateDistance(x1: Float, y1: Float, x2: Double, y2: Double): Double {
         return sqrt( (x1 - x2).pow(2.0) + (y1 - y2).pow(2.0))
     }
 
@@ -78,7 +75,7 @@ class MainViewModel : ViewModel() {
 }
 
 data class MainUiState (
-//    val touchUiState: TouchUiState
+//    val touchUiState: TouchUiState,
     val firstTouchX: Float = 0f,
     val firstTouchY: Float = 0f,
     val circleX_Min: Float,
@@ -98,9 +95,9 @@ data class MainUiState (
     }
 }
 
-data class TouchUiState (
-    val circleX_Min: Float = 0f,
-    val circleX_Max: Float = 0f,
-    val circleY_Min: Float = 0f,
-    val circleY_Max: Float = 0f
-)
+//data class TouchUiState (
+//    val circleX_Min: Float = 0f,
+//    val circleX_Max: Float = 0f,
+//    val circleY_Min: Float = 0f,
+//    val circleY_Max: Float = 0f
+//)
