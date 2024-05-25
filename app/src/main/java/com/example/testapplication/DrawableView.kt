@@ -21,7 +21,7 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
     private val paint = Paint().apply {
         color = ContextCompat.getColor(context, R.color.trajectory_color)
         style = Paint.Style.STROKE
-        strokeWidth = 30f
+        strokeWidth = 20f
         isAntiAlias = true
     }
 
@@ -43,10 +43,13 @@ class DrawableView(context: Context, attrs: AttributeSet? = null) : View(context
                 viewModel.recordFirstTouchEvent(event.x, event.y)
                 // タッチした位置にパスを移動
                 path.moveTo(x, y)
-                return true
             }
             MotionEvent.ACTION_MOVE -> {
-                viewModel.recordTouchEvent(event.x, event.y)
+                val shouldXPointInView = event.x > 0 && event.x < this.width
+                val shouldYPointInView = event.y > 0 && event.y < this.height
+                if(shouldXPointInView && shouldYPointInView) {
+                    viewModel.recordTouchEvent(event.x, event.y)
+                }
                 // タッチしている位置までパスを線でつなぐ
                 path.lineTo(x, y)
                 invalidate() // 再描画を要求
