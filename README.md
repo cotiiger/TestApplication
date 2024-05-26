@@ -1,7 +1,7 @@
 # TestApplication
 任意の画像をなぞって切り抜く実装が入っています。
 
-https://github.com/cotiiger/TestApplication/assets/145006121/30f634c7-2862-4a0a-ae7b-27a907d0fc67
+https://github.com/cotiiger/TestApplication/assets/145006121/7f68a424-1c5d-47f5-a321-f440fd979483
 
 ## 操作について
 - なぞった範囲を覆う最小の四角形に切り抜きます。
