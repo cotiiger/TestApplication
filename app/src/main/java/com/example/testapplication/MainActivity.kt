@@ -2,10 +2,7 @@ package com.example.testapplication
 
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +16,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, MainFragment()).commit()
         }
         rectangleSearchDemo.setOnClickListener {
-
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AreaMoveFragment()).commit()
         }
     }
 }
