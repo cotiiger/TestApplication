@@ -3,7 +3,7 @@ package com.example.testapplication
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
@@ -29,8 +29,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         val clippedArea = view.findViewById<ImageView>(R.id.clippedArea) // 囲った範囲に切り抜いた画像
         val drawableView = view.findViewById<DrawableView>(R.id.drawableView) // 指の軌跡の表示と計測をするView
 
-        // 各種設定
-        drawableView.viewModel = viewModel
+        // なぞった座標を記録
+        drawableView.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    viewModel.recordFirstTouchEvent(event.x, event.y)
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    val shouldXPointInView = event.x > 0 && event.x < drawableView.width
+                    val shouldYPointInView = event.y > 0 && event.y < drawableView.height
+                    if (shouldXPointInView && shouldYPointInView) {
+                        viewModel.recordTouchEvent(event.x, event.y)
+                    }
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    viewModel.actionUp(event.x, event.y)
+                }
+            }
+            return@setOnTouchListener false
+        }
 
         // repeatOnLifecycle
         viewLifecycleOwner.lifecycleScope.launch {
